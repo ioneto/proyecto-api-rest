@@ -1,11 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Proyecto de desarrollo de API Rest para el ramo "Desarrollo web basado en API Rest".
 
-Things you may want to cover:
+* Ruby version: 2.3.1p112 (2016-04-26)
 
-* Ruby version
+* Rails version: 5.0.0.1
 
 * System dependencies
 
