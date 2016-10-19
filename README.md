@@ -1,6 +1,6 @@
 # README
 
-Proyecto de desarrollo de API Rest para el ramo "Desarrollo web basado en API Rest".
+Proyecto de desarrollo de API Rest para el ramo "Desarrollo web orientado a API y microservicios".
 
 * Ruby version: 2.3.1p112 (2016-04-26)
 
