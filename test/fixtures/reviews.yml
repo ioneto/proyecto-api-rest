@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_subject: one
+  fechaEvaluacion: 2016-10-20
+  nota: 1
+
+two:
+  user_subject: two
+  fechaEvaluacion: 2016-10-20
+  nota: 1
