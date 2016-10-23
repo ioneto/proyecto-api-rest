@@ -1,7 +1,4 @@
-json.subjects do
-		json.array! @user.subjects do |subject|
-			json.id subject.id
-			json.sigla subject.sigla
-			json.credits subject.credits
+		json.array! @user.user_subjects do |user_subject|
+			json.user_subject_id user_subject.id
+			json.ramos user_subject.subject
 		end
-end

@@ -11,6 +11,7 @@ class UserSubjectsController < ApplicationController
   # GET /user_subjects/1
   # GET /user_subjects/1.json
   def show
+    @user = UserSubject.find(params[:id])
   end
 
   # POST /user_subjects
