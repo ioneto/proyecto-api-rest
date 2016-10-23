@@ -1,1 +1,5 @@
-json.partial! "user_subjects/user_subject", user_subject: @user_subject
+json.user do 
+	json.user_subject_id @user.id
+	json.ramos @user.subject
+	json.semester @user.semester
+end
