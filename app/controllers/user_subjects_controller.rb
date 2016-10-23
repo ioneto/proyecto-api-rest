@@ -4,7 +4,8 @@ class UserSubjectsController < ApplicationController
   # GET /user_subjects
   # GET /user_subjects.json
   def index
-    @user_subjects = UserSubject.all
+    @user = User.find(params[:user_id])
+    #@user_subjects = @user.user_subjects
   end
 
   # GET /user_subjects/1

@@ -1,3 +1,269 @@
+<<<<<<< HEAD
+  [1m[35m (376.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying PRIMARY KEY)[0m
+  [1m[35m (92.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (10.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20161020205749)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (71.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" serial primary key, "username" character varying, "password" character varying, "fullname" character varying, "email" character varying, "rol" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020205749"]]
+  [1m[35m (21.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSubjects (20161020205918)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (65.4ms)[0m  [1m[35mCREATE TABLE "subjects" ("id" serial primary key, "name" character varying, "sigla" character varying, "credits" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020205918"]]
+  [1m[35m (9.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateUserSubjects (20161020210002)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (81.8ms)[0m  [1m[35mCREATE TABLE "user_subjects" ("id" serial primary key, "user_id" integer, "subject_id" integer, "semester" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e30a7dc503"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_a1bf68115b"
+FOREIGN KEY ("subject_id")
+  REFERENCES "subjects" ("id")
+)[0m
+  [1m[35m (32.8ms)[0m  [1m[35mCREATE  INDEX  "index_user_subjects_on_user_id" ON "user_subjects"  ("user_id")[0m
+  [1m[35m (32.1ms)[0m  [1m[35mCREATE  INDEX  "index_user_subjects_on_subject_id" ON "user_subjects"  ("subject_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210002"]]
+  [1m[35m (17.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (47.1ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" serial primary key, "user_subject_id" integer, "fechaEvaluacion" date, "nota" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e1d40ec3da"
+FOREIGN KEY ("user_subject_id")
+  REFERENCES "user_subjects" ("id")
+)[0m
+  [1m[35m (32.6ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_subject_id" ON "reviews"  ("user_subject_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210140"]]
+  [1m[35m (16.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (13.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", 2016-10-20 21:17:12 UTC], ["updated_at", 2016-10-20 21:17:12 UTC]]
+  [1m[35m (22.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (11.2ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'reviews'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started GET "/users" for 127.0.0.1 at 2016-10-20 18:22:57 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered users/index.json.jbuilder (57.1ms)
+Completed 200 OK in 71ms (Views: 67.3ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 18:25:29 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered users/index.json.jbuilder (2.6ms)
+Completed 200 OK in 10ms (Views: 7.1ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2016-10-20 18:26:20 -0300
+Processing by UsersController#create as */*
+  Parameters: {"username"=>"famancil", "password"=>"[FILTERED]", "fullname"=>"Felipe Alexis Mancilla Sepulveda", "email"=>"felipe.mancilla@alumnos.usm.cl", "rol"=>"201073074-3", "user"=>{"username"=>"famancil", "password"=>"[FILTERED]", "fullname"=>"Felipe Alexis Mancilla Sepulveda", "email"=>"felipe.mancilla@alumnos.usm.cl", "rol"=>"201073074-3"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "password", "fullname", "email", "rol", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "famancil"], ["password", "hola123"], ["fullname", "Felipe Alexis Mancilla Sepulveda"], ["email", "felipe.mancilla@alumnos.usm.cl"], ["rol", "201073074-3"], ["created_at", 2016-10-20 21:26:20 UTC], ["updated_at", 2016-10-20 21:26:20 UTC]]
+  [1m[35m (12.4ms)[0m  [1m[35mCOMMIT[0m
+  Rendering users/show.json.jbuilder
+  Rendered users/_user.json.jbuilder (141.8ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/show.json.jbuilder (176.6ms)
+Completed 201 Created in 208ms (Views: 176.6ms | ActiveRecord: 19.5ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2016-10-20 18:26:35 -0300
+Processing by UsersController#create as */*
+  Parameters: {"username"=>"fadasilva", "password"=>"[FILTERED]", "fullname"=>"Fabián Alexander Da Silva Retamales", "email"=>"fabian.dasilva.12@sansanos.usm.cl", "rol"=>"201202043-6", "user"=>{"username"=>"fadasilva", "password"=>"[FILTERED]", "fullname"=>"Fabián Alexander Da Silva Retamales", "email"=>"fabian.dasilva.12@sansanos.usm.cl", "rol"=>"201202043-6"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "password", "fullname", "email", "rol", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["username", "fadasilva"], ["password", "hola1234"], ["fullname", "Fabián Alexander Da Silva Retamales"], ["email", "fabian.dasilva.12@sansanos.usm.cl"], ["rol", "201202043-6"], ["created_at", 2016-10-20 21:26:35 UTC], ["updated_at", 2016-10-20 21:26:35 UTC]]
+  [1m[35m (31.6ms)[0m  [1m[35mCOMMIT[0m
+  Rendering users/show.json.jbuilder
+  Rendered users/_user.json.jbuilder (3.9ms)
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/show.json.jbuilder (7.5ms)
+Completed 201 Created in 47ms (Views: 11.4ms | ActiveRecord: 32.5ms)
+
+
+Started POST "/subjects" for 127.0.0.1 at 2016-10-20 18:26:58 -0300
+Processing by SubjectsController#create as */*
+  Parameters: {"name"=>"Matematicas IV", "sigla"=>"MAT-024", "credits"=>4, "subject"=>{"name"=>"Matematicas IV", "sigla"=>"MAT-024", "credits"=>4}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "sigla", "credits", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Matematicas IV"], ["sigla", "MAT-024"], ["credits", 4], ["created_at", 2016-10-20 21:26:58 UTC], ["updated_at", 2016-10-20 21:26:58 UTC]]
+  [1m[35m (28.8ms)[0m  [1m[35mCOMMIT[0m
+  Rendering subjects/show.json.jbuilder
+  Rendered subjects/_subject.json.jbuilder (2.0ms)
+  Rendered subjects/show.json.jbuilder (4.6ms)
+Completed 201 Created in 53ms (Views: 10.7ms | ActiveRecord: 29.4ms)
+
+
+Started POST "/subjects" for 127.0.0.1 at 2016-10-20 18:27:25 -0300
+Processing by SubjectsController#create as */*
+  Parameters: {"name"=>"Fisica 130", "sigla"=>"FIS-130", "credits"=>4, "subject"=>{"name"=>"Fisica 130", "sigla"=>"FIS-130", "credits"=>4}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "sigla", "credits", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Fisica 130"], ["sigla", "FIS-130"], ["credits", 4], ["created_at", 2016-10-20 21:27:25 UTC], ["updated_at", 2016-10-20 21:27:25 UTC]]
+  [1m[35m (26.9ms)[0m  [1m[35mCOMMIT[0m
+  Rendering subjects/show.json.jbuilder
+  Rendered subjects/_subject.json.jbuilder (1.0ms)
+  Rendered subjects/show.json.jbuilder (3.2ms)
+Completed 201 Created in 39ms (Views: 8.2ms | ActiveRecord: 27.5ms)
+
+
+Started POST "/users/1/subjets" for 127.0.0.1 at 2016-10-20 18:30:31 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [POST] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.0) lib/puma/configuration.rb:225:in `call'
+puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.0) lib/puma/server.rb:415:in `process_client'
+puma (3.6.0) lib/puma/server.rb:275:in `block in run'
+puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+Started POST "/users/1/subjets" for 127.0.0.1 at 2016-10-20 18:30:41 -0300
+  
+ActionController::RoutingError (No route matches [POST] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.0) lib/puma/configuration.rb:225:in `call'
+puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.0) lib/puma/server.rb:415:in `process_client'
+puma (3.6.0) lib/puma/server.rb:275:in `block in run'
+puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+Started POST "/users/1/subjets" for 127.0.0.1 at 2016-10-20 18:31:38 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [POST] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.0) lib/puma/configuration.rb:225:in `call'
+puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.0) lib/puma/server.rb:415:in `process_client'
+puma (3.6.0) lib/puma/server.rb:275:in `block in run'
+puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+Started POST "/users/1/subjets" for 127.0.0.1 at 2016-10-20 18:40:02 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [POST] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.0) lib/puma/configuration.rb:225:in `call'
+puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.0) lib/puma/server.rb:415:in `process_client'
+puma (3.6.0) lib/puma/server.rb:275:in `block in run'
+puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+Started GET "/users/1/subjets" for 127.0.0.1 at 2016-10-20 18:41:08 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+=======
 Started GET "/" for 127.0.0.1 at 2016-10-22 14:59:35 -0300
   
 PG::ConnectionBad (FATAL:  password authentication failed for user "postgres"
@@ -28,6 +294,7 @@ actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
 actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
 actionpack (5.0.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
 actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+>>>>>>> 3f4cdfeac7fbffe7ad12508af072f138c88eacaf
 actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
 railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
 railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
@@ -47,6 +314,841 @@ puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
 puma (3.6.0) lib/puma/server.rb:415:in `process_client'
 puma (3.6.0) lib/puma/server.rb:275:in `block in run'
 puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+<<<<<<< HEAD
+Started POST "/users/1/subjects" for 127.0.0.1 at 2016-10-20 18:42:48 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#create as */*
+  Parameters: {"subject_id"=>1, "semester"=>"2015-2", "user_id"=>"1", "user_subject"=>{"subject_id"=>1, "semester"=>"2015-2"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT  "subjects".* FROM "subjects" WHERE "subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "user_subjects" ("user_id", "subject_id", "semester", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["subject_id", 1], ["semester", "2015-2"], ["created_at", 2016-10-20 21:42:48 UTC], ["updated_at", 2016-10-20 21:42:48 UTC]]
+  [1m[35m (35.7ms)[0m  [1m[35mCOMMIT[0m
+  Rendering users/show.json.jbuilder
+  Rendered users/_user.json.jbuilder (8.2ms)
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/show.json.jbuilder (17.4ms)
+Completed 201 Created in 165ms (Views: 22.9ms | ActiveRecord: 44.6ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 18:58:30 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (162.4ms)
+  Rendered users/index.json.jbuilder (170.4ms)
+Completed 500 Internal Server Error in 178ms (ActiveRecord: 10.3ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `note' for #<#<Class:0x00000004fc9eb0>:0x00000004fb5488>):
+     5: 	json.fullname user.fullname
+     6: 	json.subjects do
+     7: 		json.array! user.user_subjects do |subject|
+     8: 			json.id note.id
+     9: 			json.id note.title
+    10: 			json.description note.description
+    11: 			json.reviews do
+  
+app/views/users/_user.json.jbuilder:8:in `block (3 levels) in _app_views_users__user_json_jbuilder___1903438165676836175_40734240'
+app/views/users/_user.json.jbuilder:7:in `block (2 levels) in _app_views_users__user_json_jbuilder___1903438165676836175_40734240'
+app/views/users/_user.json.jbuilder:6:in `block in _app_views_users__user_json_jbuilder___1903438165676836175_40734240'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder___1903438165676836175_40734240'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder__787855856860292667_41834200'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 18:59:13 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (35.7ms)
+  Rendered users/index.json.jbuilder (45.2ms)
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 6.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `sigla' for #<UserSubject:0x00000003dabb48>):
+     6: 	json.subjects do
+     7: 		json.array! user.user_subjects do |subject|
+     8: 			json.id subject.id
+     9: 			json.sigla subject.sigla
+    10: 			json.reviews do
+    11: 				json.array! subject.reviews do |review|
+    12: 					json.id review.id
+  
+app/views/users/_user.json.jbuilder:9:in `block (3 levels) in _app_views_users__user_json_jbuilder__1357058436267648260_40658580'
+app/views/users/_user.json.jbuilder:7:in `block (2 levels) in _app_views_users__user_json_jbuilder__1357058436267648260_40658580'
+app/views/users/_user.json.jbuilder:6:in `block in _app_views_users__user_json_jbuilder__1357058436267648260_40658580'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1357058436267648260_40658580'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___3689007169406642144_41608140'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 18:59:49 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (41.2ms)
+  Rendered users/index.json.jbuilder (49.1ms)
+Completed 500 Internal Server Error in 57ms (ActiveRecord: 6.5ms)
+
+
+  
+ActionView::Template::Error (undefined method `reviews' for #<Subject:0x00000003be9968>):
+     8: 			json.id subject.id
+     9: 			json.sigla subject.sigla
+    10: 			json.reviews do
+    11: 				json.array! subject.reviews do |review|
+    12: 					json.id review.id
+    13: 					json.nota review.nota
+    14: 				end
+  
+app/views/users/_user.json.jbuilder:11:in `block (4 levels) in _app_views_users__user_json_jbuilder__379292133673691604_42006880'
+app/views/users/_user.json.jbuilder:10:in `block (3 levels) in _app_views_users__user_json_jbuilder__379292133673691604_42006880'
+app/views/users/_user.json.jbuilder:7:in `block (2 levels) in _app_views_users__user_json_jbuilder__379292133673691604_42006880'
+app/views/users/_user.json.jbuilder:6:in `block in _app_views_users__user_json_jbuilder__379292133673691604_42006880'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__379292133673691604_42006880'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___456507389639683161_42949140'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:01:25 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (44.7ms)
+  Rendered users/index.json.jbuilder (54.0ms)
+Completed 500 Internal Server Error in 63ms (ActiveRecord: 7.1ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_id' for #<Subject:0x000000037d1588>
+Did you mean?  user_ids
+               user_ids=):
+     7: 		json.array! user.subjects do |subject|
+     8: 			json.id subject.id
+     9: 			json.sigla subject.sigla
+    10: 			json.user_id subject.user_id
+    11: 		end
+    12: 	end
+    13: end
+  
+app/views/users/_user.json.jbuilder:10:in `block (3 levels) in _app_views_users__user_json_jbuilder___3164397841027434258_40066200'
+app/views/users/_user.json.jbuilder:7:in `block (2 levels) in _app_views_users__user_json_jbuilder___3164397841027434258_40066200'
+app/views/users/_user.json.jbuilder:6:in `block in _app_views_users__user_json_jbuilder___3164397841027434258_40066200'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder___3164397841027434258_40066200'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder__4551170999191190306_40932640'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:02:05 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.8ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (5.3ms)
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (2.1ms)
+  Rendered users/index.json.jbuilder (15.3ms)
+Completed 200 OK in 24ms (Views: 17.4ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:06:02 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (51.5ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (4.8ms)
+  Rendered users/index.json.jbuilder (72.1ms)
+Completed 200 OK in 80ms (Views: 68.9ms | ActiveRecord: 9.6ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:06:24 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (50.9ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (4.3ms)
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (69.4ms)
+Completed 200 OK in 78ms (Views: 65.6ms | ActiveRecord: 10.9ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:22:06 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (69.2ms)
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.4ms)
+  Rendered users/index.json.jbuilder (94.0ms)
+Completed 200 OK in 114ms (Views: 99.5ms | ActiveRecord: 11.5ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:22:44 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (77.1ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.1ms)
+  Rendered users/index.json.jbuilder (95.1ms)
+Completed 200 OK in 108ms (Views: 90.4ms | ActiveRecord: 11.4ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:23:25 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (7.4ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.7ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (7.4ms)
+  Rendered users/index.json.jbuilder (21.3ms)
+Completed 200 OK in 33ms (Views: 27.0ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:23:49 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (114.6ms)
+  Rendered users/index.json.jbuilder (119.3ms)
+Completed 500 Internal Server Error in 135ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `json' for #<#<Class:0x007fb790472f58>:0x000000043af7d8>):
+     9: 			json.sigla subject.sigla
+    10: 		end
+    11: 	end
+    12: 	json do
+    13: 		json.array! user.user_subjects do |use|
+    14: 			json.reviews use.reviews do |review|
+    15: 				json.id review.id
+  
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_35416720'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_35416720'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_35504840'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:23:55 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (6.0ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (4.0ms)
+  Rendered users/index.json.jbuilder (14.7ms)
+Completed 200 OK in 21ms (Views: 16.0ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:24:41 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (10.5ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.3ms)
+  Rendered users/index.json.jbuilder (20.3ms)
+Completed 200 OK in 29ms (Views: 24.1ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:24:48 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (7.4ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.9ms)
+  Rendered users/index.json.jbuilder (21.1ms)
+Completed 200 OK in 32ms (Views: 25.4ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:25:19 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (1.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.4ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (11.7ms)
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.7ms)
+  Rendered users/index.json.jbuilder (20.7ms)
+Completed 200 OK in 27ms (Views: 21.2ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:25:45 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (7.0ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (8.4ms)
+  Rendered users/index.json.jbuilder (22.1ms)
+Completed 200 OK in 32ms (Views: 26.1ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:26:06 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (170.7ms)
+  Rendered users/index.json.jbuilder (173.5ms)
+Completed 500 Internal Server Error in 180ms (ActiveRecord: 0.5ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `use' for #<#<Class:0x007fb790472f58>:0x000000043bb560>
+Did you mean?  user):
+    10: 		end
+    11: 	end
+    12: 	json.reviews do
+    13: 			json.array! use.user_subjects.reviews do |review|
+    14: 				json.id review.id
+    15: 				json.nota review.nota
+    16: 				json.fechaEvaluacion review.fechaEvaluacion
+  
+app/views/users/_user.json.jbuilder:13:in `block (2 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_35599660'
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_35599660'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_35599660'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_35316600'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:26:15 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (16.1ms)
+  Rendered users/index.json.jbuilder (18.9ms)
+Completed 500 Internal Server Error in 31ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `reviews' for #<UserSubject::ActiveRecord_Associations_CollectionProxy:0x007fb79051e150>
+Did you mean?  reverse):
+    10: 		end
+    11: 	end
+    12: 	json.reviews do
+    13: 			json.array! user.user_subjects.reviews do |review|
+    14: 				json.id review.id
+    15: 				json.nota review.nota
+    16: 				json.fechaEvaluacion review.fechaEvaluacion
+  
+app/views/users/_user.json.jbuilder:13:in `block (2 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_70213188338040'
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_70213188338040'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_70213188338040'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_70213188251400'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:26:24 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (24.9ms)
+  Rendered users/index.json.jbuilder (31.5ms)
+Completed 500 Internal Server Error in 42ms (ActiveRecord: 1.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_subjects' for #<UserSubject:0x00000002f66f38>):
+    11: 	end
+    12: 	json.reviews do
+    13: 		json.array! user.user_subjects do |use|
+    14: 			json.array! use.user_subjects.reviews do |review|
+    15: 				json.id review.id
+    16: 				json.nota review.nota
+    17: 				json.fechaEvaluacion review.fechaEvaluacion
+  
+app/views/users/_user.json.jbuilder:14:in `block (3 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_25087940'
+app/views/users/_user.json.jbuilder:13:in `block (2 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_25087940'
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_25087940'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_25087940'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_25179960'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:26:35 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.5ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (15.4ms)
+  Rendered users/index.json.jbuilder (19.5ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `reviews' for #<UserSubject::ActiveRecord_Associations_CollectionProxy:0x00000002f7b708>
+Did you mean?  reverse):
+    11: 	end
+    12: 	json.reviews do
+    13: 		json.array! user.user_subjects do |use|
+    14: 			json.array! user.user_subjects.reviews do |review|
+    15: 				json.id review.id
+    16: 				json.nota review.nota
+    17: 				json.fechaEvaluacion review.fechaEvaluacion
+  
+app/views/users/_user.json.jbuilder:14:in `block (3 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_25072540'
+app/views/users/_user.json.jbuilder:13:in `block (2 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_25072540'
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_25072540'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_25072540'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_25175660'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:26:55 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (15.4ms)
+  Rendered users/index.json.jbuilder (17.9ms)
+Completed 500 Internal Server Error in 25ms (ActiveRecord: 0.6ms)
+
+
+  
+ActionView::Template::Error (undefined method `reviews' for #<UserSubject::ActiveRecord_Associations_CollectionProxy:0x00000002632480>
+Did you mean?  reverse):
+    11: 	end
+    12: 	json.reviews do
+    13: 		json.array! user.user_subjects do |use|
+    14: 			json.array! user.user_subjects.reviews do |review|
+    15: 				json.id review.id
+    16: 				json.nota review.nota
+    17: 				json.fechaEvaluacion review.fechaEvaluacion
+  
+app/views/users/_user.json.jbuilder:14:in `block (3 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_20359980'
+app/views/users/_user.json.jbuilder:13:in `block (2 levels) in _app_views_users__user_json_jbuilder__1774071156961990275_20359980'
+app/views/users/_user.json.jbuilder:12:in `block in _app_views_users__user_json_jbuilder__1774071156961990275_20359980'
+app/views/users/_user.json.jbuilder:1:in `_app_views_users__user_json_jbuilder__1774071156961990275_20359980'
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder___1197542200156301377_24599780'
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:27:03 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (9.1ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.0ms)
+  Rendered users/index.json.jbuilder (21.2ms)
+Completed 200 OK in 30ms (Views: 24.7ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/users/" for 127.0.0.1 at 2016-10-20 19:27:40 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (4.4ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (5.3ms)
+  Rendered users/index.json.jbuilder (14.2ms)
+Completed 200 OK in 23ms (Views: 17.0ms | ActiveRecord: 1.0ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (42.2ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20161020210140"]]
+  [1m[35m (15.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (6.1ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (68.7ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" serial primary key, "user_subject_id" integer, "fechaEvaluacion" date, "nota" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e1d40ec3da"
+FOREIGN KEY ("user_subject_id")
+  REFERENCES "user_subjects" ("id")
+)[0m
+  [1m[35m (42.8ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_subject_id" ON "reviews"  ("user_subject_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210140"]]
+  [1m[35m (21.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'reviews'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started POST "/users/1/reviews" for 127.0.0.1 at 2016-10-20 19:42:12 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "color"=>"0xABGFDS", "fechaInicio"=>"10/10/2016", "fechaTermino"=>"10/10/2016", "allDay"=>"true", "nota"=>100, "user_id"=>"1", "review"=>{"nota"=>100}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+Completed 422 Unprocessable Entity in 109ms (Views: 0.2ms | ActiveRecord: 3.0ms)
+
+
+Started POST "/users/1/reviews" for 127.0.0.1 at 2016-10-20 19:42:33 -0300
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "user_subject_id"=>1, "color"=>"0xABGFDS", "fechaInicio"=>"10/10/2016", "fechaTermino"=>"10/10/2016", "allDay"=>"true", "nota"=>100, "user_id"=>"1", "review"=>{"user_subject_id"=>1, "nota"=>100}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_subject_id", 1], ["nota", 100], ["created_at", 2016-10-20 22:42:33 UTC], ["updated_at", 2016-10-20 22:42:33 UTC]]
+  [1m[35m (69.0ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 118ms (ActiveRecord: 73.4ms)
+
+
+  
+NoMethodError (undefined method `review_url' for #<ReviewsController:0x007f84e421f3e8>
+Did you mean?  review_params):
+  
+app/controllers/reviews_controller.rb:21:in `create'
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:42:47 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (44.9ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (4.1ms)
+  Rendered users/index.json.jbuilder (70.3ms)
+Completed 200 OK in 89ms (Views: 77.8ms | ActiveRecord: 8.5ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:44:26 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (1.0ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (21.9ms)
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.8ms)
+  Rendered users/index.json.jbuilder (33.8ms)
+Completed 200 OK in 44ms (Views: 36.0ms | ActiveRecord: 2.9ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:45:09 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.6ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (8.9ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.8ms)
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (23.8ms)
+Completed 200 OK in 34ms (Views: 27.0ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:45:41 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.7ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (7.4ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (2.9ms)
+  Rendered users/index.json.jbuilder (18.6ms)
+Completed 200 OK in 29ms (Views: 20.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:46:05 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (4.7ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (5.7ms)
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (15.9ms)
+Completed 200 OK in 23ms (Views: 17.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:47:26 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (8.8ms)
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (6.8ms)
+  Rendered users/index.json.jbuilder (22.2ms)
+Completed 200 OK in 31ms (Views: 24.6ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:48:09 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  Rendered users/_user.json.jbuilder (0.8ms)
+  Rendered users/index.json.jbuilder (4.2ms)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.3ms)
+
+
+  
+SyntaxError (/home/famancil/Curso API/proyecto-api-rest-backend/app/views/users/_user.json.jbuilder:21: syntax error, unexpected keyword_ensure, expecting end-of-input):
+  
+app/views/users/_user.json.jbuilder:21: syntax error, unexpected keyword_ensure, expecting end-of-input
+app/views/users/index.json.jbuilder:1:in `_app_views_users_index_json_jbuilder__2994126502053162371_70104570212680'
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:48:17 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.6ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.5ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/_user.json.jbuilder (10.5ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.7ms)
+  Rendered users/index.json.jbuilder (19.2ms)
+Completed 200 OK in 43ms (Views: 35.1ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:48:35 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (5.0ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.1ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (2.8ms)
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (14.3ms)
+Completed 200 OK in 26ms (Views: 20.3ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-20 19:48:55 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.9ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (12.1ms)
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (3.9ms)
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (22.7ms)
+Completed 200 OK in 30ms (Views: 24.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-21 01:46:28 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (23.8ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (17.9ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (1.9ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (115.7ms)
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (4.4ms)
+  [1m[36mReview Load (0.9ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (189.5ms)
+Completed 200 OK in 226ms (Views: 183.8ms | ActiveRecord: 57.6ms)
+
+
+Started POST "/users/1/reviews" for 127.0.0.1 at 2016-10-21 01:46:41 -0300
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+Completed 404 Not Found in 6ms (ActiveRecord: 0.3ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find UserSubject with 'id'=):
+  
+app/controllers/reviews_controller.rb:18:in `create'
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:48:05 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.5ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (22.3ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:48:05 UTC], ["updated_at", 2016-10-21 04:48:05 UTC]]
+  [1m[35m (17.9ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 123ms (ActiveRecord: 46.6ms)
+
+
+  
+NoMethodError (undefined method `user_subject_review_url' for #<ReviewsController:0x0000000389fe88>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:24:in `create'
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:48:19 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/users/1/ramos/1/reviews"):
+=======
 Started GET "/" for 127.0.0.1 at 2016-10-22 15:00:40 -0300
   [1m[36mActiveRecord::SchemaMigration Load (49.9ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
 Processing by Rails::WelcomeController#index as HTML
@@ -59,6 +1161,7 @@ Completed 200 OK in 29ms (Views: 26.8ms | ActiveRecord: 0.0ms)
 Started GET "/favicon.ico" for 127.0.0.1 at 2016-10-22 15:00:42 -0300
   
 ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+>>>>>>> 3f4cdfeac7fbffe7ad12508af072f138c88eacaf
   
 actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
 actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
@@ -80,6 +1183,958 @@ puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
 puma (3.6.0) lib/puma/server.rb:415:in `process_client'
 puma (3.6.0) lib/puma/server.rb:275:in `block in run'
 puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+<<<<<<< HEAD
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:50:29 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.6ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/_review.json.jbuilder (100.6ms)
+  Rendered reviews/index.json.jbuilder (111.9ms)
+Completed 500 Internal Server Error in 155ms (ActiveRecord: 9.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_subjectt_review_url' for #<#<Class:0x0000000407b418>:0x00000004073178>
+Did you mean?  user_subjects_url):
+    1: json.extract! review, :id, :user_subject_id, :fechaEvaluacion, :nota, :created_at, :updated_at
+    2: json.url user_subjectt_review_url(review.user_subject_id, review.id)
+  
+app/views/reviews/_review.json.jbuilder:2:in `_app_views_reviews__review_json_jbuilder__3965264071916362653_32613420'
+app/views/reviews/index.json.jbuilder:1:in `_app_views_reviews_index_json_jbuilder___1219505207700236294_33817780'
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:50:44 -0300
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.4ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/_review.json.jbuilder (90.1ms)
+  Rendered reviews/index.json.jbuilder (93.9ms)
+Completed 500 Internal Server Error in 105ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_subject_review_url' for #<#<Class:0x0000000407b418>:0x007fbb647c5bd8>
+Did you mean?  user_subjects_url):
+    1: json.extract! review, :id, :user_subject_id, :fechaEvaluacion, :nota, :created_at, :updated_at
+    2: json.url user_subject_review_url(review.user_subject_id, review.id)
+  
+app/views/reviews/_review.json.jbuilder:2:in `_app_views_reviews__review_json_jbuilder__3965264071916362653_70221410663000'
+app/views/reviews/index.json.jbuilder:1:in `_app_views_reviews_index_json_jbuilder___1219505207700236294_70221410743360'
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:50:50 -0300
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/_review.json.jbuilder (0.9ms)
+  Rendered reviews/_review.json.jbuilder (0.4ms)
+  Rendered reviews/index.json.jbuilder (7.3ms)
+Completed 200 OK in 17ms (Views: 11.5ms | ActiveRecord: 0.6ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (190.3ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20161020210140"]]
+  [1m[35m (17.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (9.5ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (243.3ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" serial primary key, "user_subject_id" integer, "fechaEvaluacion" date, "nota" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e1d40ec3da"
+FOREIGN KEY ("user_subject_id")
+  REFERENCES "user_subjects" ("id")
+)[0m
+  [1m[35m (34.8ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_subject_id" ON "reviews"  ("user_subject_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210140"]]
+  [1m[35m (16.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (19.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'reviews'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:52:32 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/index.json.jbuilder (4.1ms)
+Completed 200 OK in 41ms (Views: 8.7ms | ActiveRecord: 6.4ms)
+
+
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:52:38 -0300
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (38.2ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:52:38 UTC], ["updated_at", 2016-10-21 04:52:38 UTC]]
+  [1m[35m (62.0ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 150ms (ActiveRecord: 101.9ms)
+
+
+  
+NoMethodError (undefined method `user_subject_review_url' for #<ReviewsController:0x007f1f5c1693d8>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:25:in `create'
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:53:22 -0300
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/_review.json.jbuilder (1.4ms)
+  Rendered reviews/index.json.jbuilder (5.1ms)
+Completed 200 OK in 15ms (Views: 8.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/1/subjects.1" for 127.0.0.1 at 2016-10-21 01:53:27 -0300
+Processing by UserSubjectsController#index as 
+  Parameters: {"user_id"=>"1"}
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects"[0m
+  Rendered user_subjects/_user_subject.json.jbuilder (97.2ms)
+  Rendered user_subjects/index.json.jbuilder (101.8ms)
+Completed 500 Internal Server Error in 113ms (ActiveRecord: 0.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_subject_url' for #<#<Class:0x00000002493520>:0x00000002486f78>
+Did you mean?  user_subjects_url):
+    1: json.extract! user_subject, :id, :user_id, :subject_id, :semester, :created_at, :updated_at
+    2: json.url user_subject_url(user_subject, format: :json)
+  
+app/views/user_subjects/_user_subject.json.jbuilder:2:in `_app_views_user_subjects__user_subject_json_jbuilder__4302619147318607901_19069600'
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder__1158957077904728287_19178660'
+Started GET "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:53:35 -0300
+Processing by ReviewsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject_id"=>"1", "review"=>{}}
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering reviews/index.json.jbuilder
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered reviews/_review.json.jbuilder (1.3ms)
+  Rendered reviews/index.json.jbuilder (5.7ms)
+Completed 200 OK in 19ms (Views: 10.1ms | ActiveRecord: 0.7ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20161020210140"]]
+  [1m[35m (11.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (44.8ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" serial primary key, "user_subject_id" integer, "fechaEvaluacion" date, "nota" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e1d40ec3da"
+FOREIGN KEY ("user_subject_id")
+  REFERENCES "user_subjects" ("id")
+)[0m
+  [1m[35m (30.8ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_subject_id" ON "reviews"  ("user_subject_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210140"]]
+  [1m[35m (19.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'reviews'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:57:23 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.6ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:57:23 UTC], ["updated_at", 2016-10-21 04:57:23 UTC]]
+  [1m[35m (29.1ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 95ms (ActiveRecord: 37.3ms)
+
+
+  
+NoMethodError (undefined method `user_subject_url' for #<ReviewsController:0x007ff94c571ac8>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:25:in `create'
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:58:04 -0300
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.5ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:58:04 UTC], ["updated_at", 2016-10-21 04:58:04 UTC]]
+  [1m[35m (28.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 68ms (ActiveRecord: 29.7ms)
+
+
+  
+NoMethodError (undefined method `user_subject_url' for #<ReviewsController:0x000000034f7ec0>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:25:in `create'
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:58:21 -0300
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:58:21 UTC], ["updated_at", 2016-10-21 04:58:21 UTC]]
+  [1m[35m (26.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 66ms (ActiveRecord: 27.7ms)
+
+
+  
+NoMethodError (undefined method `user_subject_url' for #<ReviewsController:0x000000041d90d0>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:25:in `create'
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:58:28 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:58:29 UTC], ["updated_at", 2016-10-21 04:58:29 UTC]]
+  [1m[35m (15.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 81ms (ActiveRecord: 22.3ms)
+
+
+  
+NoMethodError (undefined method `user_subject_url' for #<ReviewsController:0x007f7040570b68>
+Did you mean?  user_subjects_url):
+  
+app/controllers/reviews_controller.rb:25:in `create'
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:58:46 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:58:46 UTC], ["updated_at", 2016-10-21 04:58:46 UTC]]
+  [1m[35m (33.0ms)[0m  [1m[35mCOMMIT[0m
+  Rendering reviews/show.json.jbuilder
+  Rendered reviews/_review.json.jbuilder (0.4ms)
+  Rendered reviews/show.json.jbuilder (3.2ms)
+Completed 201 Created in 84ms (Views: 9.1ms | ActiveRecord: 41.4ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20161020210140"]]
+  [1m[35m (31.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4524741980345623470);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateReviews (20161020210140)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (48.5ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" serial primary key, "user_subject_id" integer, "fechaEvaluacion" date, "nota" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_e1d40ec3da"
+FOREIGN KEY ("user_subject_id")
+  REFERENCES "user_subjects" ("id")
+)[0m
+  [1m[35m (31.6ms)[0m  [1m[35mCREATE  INDEX  "index_reviews_on_user_subject_id" ON "reviews"  ("user_subject_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161020210140"]]
+  [1m[35m (32.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4524741980345623470)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'reviews'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'user_subjects'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started POST "/users/1/ramos/1/reviews" for 127.0.0.1 at 2016-10-21 01:59:07 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ReviewsController#create as */*
+  Parameters: {"subject_id"=>1, "fechaEvaluacion"=>"10/10/2016", "nota"=>100, "user_id"=>"1", "user_subject_id"=>"1", "review"=>{"fechaEvaluacion"=>"10/10/2016", "nota"=>100}}
+  [1m[36mUserSubject Load (0.4ms)[0m  [1m[34mSELECT  "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "reviews" ("user_subject_id", "fechaEvaluacion", "nota", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_subject_id", 1], ["fechaEvaluacion", Mon, 10 Oct 2016], ["nota", 100], ["created_at", 2016-10-21 04:59:08 UTC], ["updated_at", 2016-10-21 04:59:08 UTC]]
+  [1m[35m (22.5ms)[0m  [1m[35mCOMMIT[0m
+  Rendering reviews/show.json.jbuilder
+  Rendered reviews/_review.json.jbuilder (0.4ms)
+  Rendered reviews/show.json.jbuilder (3.0ms)
+Completed 201 Created in 67ms (Views: 8.9ms | ActiveRecord: 28.6ms)
+
+
+Started GET "/users" for 127.0.0.1 at 2016-10-21 01:59:29 -0300
+Processing by UsersController#index as */*
+  Parameters: {"user"=>{}}
+  Rendering users/index.json.jbuilder
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mSubject Load (0.7ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (33.4ms)
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mUserSubject Load (0.6ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 2]]
+  Rendered users/_user.json.jbuilder (5.9ms)
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/index.json.jbuilder (54.7ms)
+Completed 200 OK in 63ms (Views: 52.2ms | ActiveRecord: 8.7ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2016-10-21 01:59:36 -0300
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"1", "user"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering users/show.json.jbuilder
+  [1m[36mSubject Load (1.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (6.6ms)
+  [1m[36mReview Load (0.5ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/show.json.jbuilder (11.4ms)
+Completed 200 OK in 49ms (Views: 14.2ms | ActiveRecord: 2.2ms)
+
+
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:08:46 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (10.7ms)
+Completed 500 Internal Server Error in 51ms (ActiveRecord: 5.4ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<User:0x007fcf402fee48>
+Did you mean?  tap):
+    1: json.array! @user, partial: 'users/user', as: :user
+  
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___2996105753375418944_70264055182780'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:09:38 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/_user_subject.json.jbuilder (117.7ms)
+  Rendered user_subjects/index.json.jbuilder (129.3ms)
+Completed 500 Internal Server Error in 163ms (ActiveRecord: 5.8ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `user' for #<#<Class:0x007fc3f01918b8>:0x007fc3f0178598>
+Did you mean?  @user):
+    1: json.user do 
+    2: 	json.id user.id
+    3: 	json.username user.username
+    4: 	json.password user.password
+    5: 	json.fullname user.fullname
+  
+app/views/user_subjects/_user_subject.json.jbuilder:2:in `block in _app_views_user_subjects__user_subject_json_jbuilder___2568464129770058406_70239761084800'
+app/views/user_subjects/_user_subject.json.jbuilder:1:in `_app_views_user_subjects__user_subject_json_jbuilder___2568464129770058406_70239761084800'
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___3289069388126730689_70239761765260'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:10:59 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/_user_subject.json.jbuilder (9.1ms)
+  Rendered user_subjects/index.json.jbuilder (19.3ms)
+Completed 500 Internal Server Error in 60ms (ActiveRecord: 6.8ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<User:0x000000033e5b90>
+Did you mean?  tap):
+    1: json.user do 
+    2: 	json.array! @user do |user|
+    3: 		json.id user.id
+    4: 		json.username user.username
+    5: 		json.password user.password
+  
+app/views/user_subjects/_user_subject.json.jbuilder:2:in `block in _app_views_user_subjects__user_subject_json_jbuilder___1962507966984285744_19332320'
+app/views/user_subjects/_user_subject.json.jbuilder:1:in `_app_views_user_subjects__user_subject_json_jbuilder___1962507966984285744_19332320'
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___2500929687835777786_26104340'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:12:05 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/_user_subject.json.jbuilder (5.1ms)
+  Rendered user_subjects/index.json.jbuilder (14.9ms)
+Completed 500 Internal Server Error in 46ms (ActiveRecord: 6.1ms)
+
+
+  
+ActionView::Template::Error (no block given):
+    1: json.user do 
+    2: 	json.array! @user.tap do |user|
+    3: 		json.id user.id
+    4: 		json.username user.username
+    5: 		json.password user.password
+  
+app/views/user_subjects/_user_subject.json.jbuilder:2:in `tap'
+app/views/user_subjects/_user_subject.json.jbuilder:2:in `block in _app_views_user_subjects__user_subject_json_jbuilder___4024946905137376342_70063600366500'
+app/views/user_subjects/_user_subject.json.jbuilder:1:in `_app_views_user_subjects__user_subject_json_jbuilder___4024946905137376342_70063600366500'
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder__2614071492501126438_70063601059300'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:13:24 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 4.9ms)
+
+
+  
+NoMethodError (undefined method `user_subjects' for nil:NilClass):
+  
+app/controllers/user_subjects_controller.rb:8:in `index'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:13:41 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (1.6ms)
+Completed 200 OK in 28ms (Views: 7.1ms | ActiveRecord: 6.5ms)
+
+
+Started GET "/users/1" for 127.0.0.1 at 2016-10-21 02:13:47 -0300
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"1", "user"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering users/show.json.jbuilder
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered users/_user.json.jbuilder (47.7ms)
+  [1m[36mReview Load (0.4ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered users/show.json.jbuilder (59.3ms)
+Completed 200 OK in 68ms (Views: 55.5ms | ActiveRecord: 8.2ms)
+
+
+Started GET "/users/1/subjets" for 127.0.0.1 at 2016-10-21 02:14:20 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [GET] "/users/1/subjets"):
+  
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.0) lib/puma/configuration.rb:225:in `call'
+puma (3.6.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.0) lib/puma/server.rb:415:in `process_client'
+puma (3.6.0) lib/puma/server.rb:275:in `block in run'
+puma (3.6.0) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:15:23 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (7.1ms)
+Completed 500 Internal Server Error in 33ms (ActiveRecord: 4.1ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<User:0x000000050eef70>
+Did you mean?  tap):
+    1: json.array! @users, partial: 'users/user', as: :user
+  
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder__4165895168416216334_42428720'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:16:16 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (119.5ms)
+Completed 500 Internal Server Error in 144ms (ActiveRecord: 6.1ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `user' for #<#<Class:0x007f1f70328e30>:0x007f1f7031c900>
+Did you mean?  user_url
+               users_url
+               user_path
+               @users):
+    1: json.user do 
+    2: 	json.id user.id
+    3: 	json.username user.username
+    4: 	json.password user.password
+    5: 	json.fullname user.fullname
+  
+app/views/user_subjects/index.json.jbuilder:2:in `block in _app_views_user_subjects_index_json_jbuilder___4303804543162228762_69886501539540'
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___4303804543162228762_69886501539540'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:16:46 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (10.6ms)
+Completed 500 Internal Server Error in 37ms (ActiveRecord: 5.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<User:0x007f6d40305430>
+Did you mean?  tap):
+    1: json.array! @users, partial: 'users/user', as: :user_subject
+  
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___2070866945016097200_70053602515820'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:17:40 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (8.0ms)
+Completed 500 Internal Server Error in 39ms (ActiveRecord: 5.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<User:0x007f4568324c90>
+Did you mean?  tap):
+    1: json.array! @users, partial: 'users/user', as: :user
+  
+app/views/user_subjects/index.json.jbuilder:1:in `_app_views_user_subjects_index_json_jbuilder___3407517869338686612_69968038778760'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:20:00 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.4ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (55.5ms)
+Completed 200 OK in 86ms (Views: 52.5ms | ActiveRecord: 13.6ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:20:42 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.8ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (54.4ms)
+Completed 200 OK in 82ms (Views: 54.9ms | ActiveRecord: 12.6ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:21:33 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  Rendered user_subjects/index.json.jbuilder (0.4ms)
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 7.4ms)
+
+
+  
+SyntaxError (/home/famancil/Curso API/proyecto-api-rest-backend/app/views/user_subjects/index.json.jbuilder:18: syntax error, unexpected ',', expecting ')'
+json.url user_url (@user.user_subject, format: :json)
+                                      ^):
+  
+app/views/user_subjects/index.json.jbuilder:18: syntax error, unexpected ',', expecting ')'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:22:29 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (72.9ms)
+Completed 500 Internal Server Error in 82ms (ActiveRecord: 5.7ms)
+
+
+  
+ActionView::Template::Error (undefined method `user_subject' for #<User:0x00000004b8ff70>
+Did you mean?  user_subjects
+               user_subjects=):
+    15: 		end
+    16: 	end
+    17: end
+    18: json.url url_for(@user.user_subject, format: :json)
+  
+app/views/user_subjects/index.json.jbuilder:18:in `_app_views_user_subjects_index_json_jbuilder___3248225533077833301_39611980'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:22:36 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (8.4ms)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (wrong number of arguments (given 2, expected 0..1)):
+    15: 		end
+    16: 	end
+    17: end
+    18: json.url url_for(@user.user_subjects, format: :json)
+  
+app/views/user_subjects/index.json.jbuilder:18:in `_app_views_user_subjects_index_json_jbuilder___3248225533077833301_43016680'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:23:06 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.3ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (11.5ms)
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 1.0ms)
+
+
+  
+ActionView::Template::Error (wrong number of arguments (given 2, expected 0..1)):
+    15: 		end
+    16: 	end
+    17: end
+    18: json.url url_for(@user, format: :json)
+  
+app/views/user_subjects/index.json.jbuilder:18:in `_app_views_user_subjects_index_json_jbuilder___3248225533077833301_33532660'
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:23:17 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mUserSubject Load (0.2ms)[0m  [1m[34mSELECT "user_subjects".* FROM "user_subjects" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."user_subject_id" = $1[0m  [["user_subject_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (23.2ms)
+Completed 200 OK in 34ms (Views: 26.3ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:23:34 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.8ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (4.3ms)
+Completed 200 OK in 14ms (Views: 7.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:23:51 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.5ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (3.4ms)
+Completed 200 OK in 12ms (Views: 6.8ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:24:10 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (2.7ms)
+Completed 200 OK in 39ms (Views: 33.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:24:23 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.3ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (3.3ms)
+Completed 200 OK in 14ms (Views: 7.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/users/1/subjects" for 127.0.0.1 at 2016-10-21 02:24:38 -0300
+Processing by UserSubjectsController#index as */*
+  Parameters: {"user_id"=>"1", "user_subject"=>{}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering user_subjects/index.json.jbuilder
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" INNER JOIN "user_subjects" ON "subjects"."id" = "user_subjects"."subject_id" WHERE "user_subjects"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered user_subjects/index.json.jbuilder (3.3ms)
+Completed 200 OK in 12ms (Views: 6.6ms | ActiveRecord: 0.4ms)
+=======
 Started GET "/reviews" for 127.0.0.1 at 2016-10-22 15:00:56 -0300
 Processing by ReviewsController#index as */*
   Parameters: {"review"=>{}}
@@ -122,5 +2177,6 @@ Processing by ReviewsController#index as */*
   Rendered reviews/_review.json.jbuilder (50.6ms)
   Rendered reviews/index.json.jbuilder (70.0ms)
 Completed 200 OK in 148ms (Views: 76.7ms | ActiveRecord: 0.9ms)
+>>>>>>> 3f4cdfeac7fbffe7ad12508af072f138c88eacaf
 
 

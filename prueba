@@ -1,0 +1,9 @@
+json.reviews do
+				json.array! subject.reviews do |review|
+					json.id review.id
+					json.nota review.nota
+				end
+			end
+
+
+{"subject_id":1, "user_subject_id":1, "color":"0xABGFDS", "fechaInicio":"10/10/2016","fechaTermino":"10/10/2016","allDay":"true","nota":100 }

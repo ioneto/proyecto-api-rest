@@ -1,1 +1,7 @@
-json.array! @user_subjects, partial: 'user_subjects/user_subject', as: :user_subject
+json.subjects do
+		json.array! @user.subjects do |subject|
+			json.id subject.id
+			json.sigla subject.sigla
+			json.credits subject.credits
+		end
+end

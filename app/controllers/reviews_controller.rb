@@ -4,7 +4,8 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
+    @user_subject = UserSubject.find(params[:user_id])
+    @reviews = @user_subject.reviews
   end
 
   # GET /reviews/1
@@ -15,10 +16,13 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params)
+    @user_subject = UserSubject.find(params[:user_subject_id])
+    @review = @user_subject.reviews.build(review_params) 
+    @review.user_subject_id = @user_subject.id 
+    #@review = Review.new(review_params)
 
     if @review.save
-      render :show, status: :created, location: @review
+      render :show, status: :created
     else
       render json: @review.errors, status: :unprocessable_entity
     end
