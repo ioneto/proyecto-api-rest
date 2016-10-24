@@ -3,13 +3,13 @@
 one:
   username: MyString
   password: MyString
-  fullname: MyString
+  full_name: MyString
   email: MyString
   rol: MyString
 
 two:
   username: MyString
   password: MyString
-  fullname: MyString
+  full_name: MyString
   email: MyString
   rol: MyString

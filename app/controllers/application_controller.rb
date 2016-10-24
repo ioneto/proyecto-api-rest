@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   #protect_from_forgery with: :null_session
 
-  before_filter :add_allow_credentials_headers
+  before_action :add_allow_credentials_headers
 
   def add_allow_credentials_headers
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#section_5

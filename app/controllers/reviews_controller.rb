@@ -4,8 +4,7 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @user_subject = UserSubject.find(params[:user_id])
-    @reviews = @user_subject.reviews
+    @reviews = Review.all
   end
 
   # GET /reviews/1
@@ -13,16 +12,25 @@ class ReviewsController < ApplicationController
   def show
   end
 
+  def show_by_user_id
+    if params[:id]
+      @review = Review.joins(:user_subject).where(:user_subjects => {:user_id => params[:user_id]}).find(params[:id])
+    else
+      @reviews = Review.joins(:user_subject).where(:user_subjects => {:user_id => params[:user_id]})
+    end
+  end
+
+  def show_by_user_id_and_subject_id
+    @reviews = Review.joins(:user_subject).where(:user_subjects => {:user_id => params[:user_id], :subject_id => params[:subject_id]})
+  end
+
   # POST /reviews
   # POST /reviews.json
   def create
-    @user_subject = UserSubject.find(params[:user_subject_id])
-    @review = @user_subject.reviews.build(review_params) 
-    @review.user_subject_id = @user_subject.id 
-    #@review = Review.new(review_params)
+    @review = Review.new(review_params)
 
     if @review.save
-      render :show, status: :created
+      render :show, status: :created, location: @review
     else
       render json: @review.errors, status: :unprocessable_entity
     end
@@ -52,6 +60,6 @@ class ReviewsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
-      params.require(:review).permit(:user_subject_id, :fechaEvaluacion, :nota)
+      params.fetch(:review, {}).permit(:user_subject_id,:title,:primary_color,:secondary_color,:start_date,:end_date,:score)
     end
 end

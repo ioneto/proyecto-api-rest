@@ -12,6 +12,14 @@ class SubjectsController < ApplicationController
   def show
   end
 
+  def show_by_user_id
+    if params[:subject_id]
+      @subjects = Subject.joins(:user_subjects).where(:user_subjects => { :user_id => params[:user_id], :subject_id => params[:subject_id] } )
+    else
+      @subjects = Subject.joins(:user_subjects).where(:user_subjects => { :user_id => params[:user_id] } )
+    end
+  end
+
   # POST /subjects
   # POST /subjects.json
   def create
@@ -48,6 +56,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :sigla, :credits)
+      params.fetch(:subject, {}).permit(:name,:initials,:credits)
     end
 end

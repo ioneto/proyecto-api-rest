@@ -12,7 +12,7 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create subject" do
     assert_difference('Subject.count') do
-      post subjects_url, params: { subject: { credits: @subject.credits, name: @subject.name, sigla: @subject.sigla } }, as: :json
+      post subjects_url, params: { subject: {  } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update subject" do
-    patch subject_url(@subject), params: { subject: { credits: @subject.credits, name: @subject.name, sigla: @subject.sigla } }, as: :json
+    patch subject_url(@subject), params: { subject: {  } }, as: :json
     assert_response 200
   end
 

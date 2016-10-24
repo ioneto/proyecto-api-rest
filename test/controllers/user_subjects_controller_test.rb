@@ -12,7 +12,7 @@ class UserSubjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create user_subject" do
     assert_difference('UserSubject.count') do
-      post user_subjects_url, params: { user_subject: { semester: @user_subject.semester, subject_id: @user_subject.subject_id, user_id: @user_subject.user_id } }, as: :json
+      post user_subjects_url, params: { user_subject: {  } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class UserSubjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update user_subject" do
-    patch user_subject_url(@user_subject), params: { user_subject: { semester: @user_subject.semester, subject_id: @user_subject.subject_id, user_id: @user_subject.user_id } }, as: :json
+    patch user_subject_url(@user_subject), params: { user_subject: {  } }, as: :json
     assert_response 200
   end
 

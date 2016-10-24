@@ -2,10 +2,10 @@
 
 one:
   name: MyString
-  sigla: MyString
+  initials: MyString
   credits: 1
 
 two:
   name: MyString
-  sigla: MyString
+  initials: MyString
   credits: 1
