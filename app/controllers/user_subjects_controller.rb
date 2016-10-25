@@ -10,6 +10,7 @@ class UserSubjectsController < ApplicationController
   # GET /user_subjects/1
   # GET /user_subjects/1.json
   def show
+    @user_subject = UserSubject.find(params[:id])
   end
 
   def show_by_subject_id
