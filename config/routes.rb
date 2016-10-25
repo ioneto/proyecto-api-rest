@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
     post 'subjects/:subject_id/reviews', to: 'reviews#create' # Registra un review de un subject a un usuario (requiere body json)
 
+    put 'reviews/:id', to: 'reviews#update' # Modifica un registro completo de un review de un subject de un usuario (requiere body json)
+
     put 'subjects/:subject_id/reviews/:id', to: 'reviews#update' # Modifica un registro completo de un review de un subject de un usuario (requiere body json)
 
     #delete 'subjects/:subject_id/reviews/:id', to: 'reviews#destroy' # Elimina un review de un subject de un usuario
