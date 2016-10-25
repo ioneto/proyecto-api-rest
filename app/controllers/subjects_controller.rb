@@ -20,6 +20,10 @@ class SubjectsController < ApplicationController
     end
   end
 
+  def show_by_user_id_and_semester
+    @subjects = Subject.joins(:user_subjects).where(:user_subjects => { :user_id => params[:user_id], :semester => params[:semester] } )
+  end
+
   # POST /subjects
   # POST /subjects.json
   def create

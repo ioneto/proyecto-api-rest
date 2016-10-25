@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'user-subjects', to: 'user_subjects#index' # Muestra todos los user_subjects de un usuario en particular
     get 'user-subjects/subjects/:subject_id', to: 'user_subjects#show_by_subject_id' # Muestra un user_subject con un usuario y un subject en particular
     get 'subjects', to: 'subjects#show_by_user_id' # Muestra todos los subjects de un usuario en particular
+    get 'subjects/:semester', to: 'subjects#show_by_user_id_and_semester' # Muestra todos los subjects de un usuario en particular
     get 'subjects/:subject_id', to: 'subjects#show_by_user_id' # Muestra un subject de un usuario en particular
 
     post 'subjects/:subject_id', to: 'user_subjects#create' # Registra un subject a un usuario (requiere body json)
