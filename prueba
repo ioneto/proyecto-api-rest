@@ -19,3 +19,7 @@ User_Subject: {"subject_id":1, "semester":"2016-1"}
 {"subject_id":1, "user_subject_id":1, "color":"0xABGFDS", "fechaInicio":"10/10/2016","fechaTermino":"10/10/2016","allDay":"true","nota":100 }
 
 {"user_subject_id":1, "title":"Primera Evaluacion del ramo", "primary_color":"#5c1a1a", "secondary_color":"#f0fb28", "start_date":"18/10/2016 00:00:00","end_date":"18/10/2016 00:00:00" }
+
+
+json.extract! review, :id, :user_subject_id, :title, :primary_color, :secondary_color, :start_date, :end_date, :score, :created_at, :updated_at
+json.url review_url(review, format: :json)

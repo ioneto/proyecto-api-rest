@@ -17,10 +17,12 @@ Rails.application.routes.draw do
 
     # RUTAS RELACIONADAS AL MODELO REVIEWS
     get 'reviews', to: 'reviews#show_by_user_id' # Muestra todos los reviews de un usuario en particular
-    get 'reviews/:id', to: 'reviews#show_by_user_id' # Muestra un review de un usuario en particular
+    get 'reviews/:id', to: 'reviews#show' # Muestra un review de un usuario en particular
     get 'subjects/:subject_id/reviews', to: 'reviews#show_by_user_id_and_subject_id' # Muestra todos los reviews de un subject de un usuario en particular
 
     post 'subjects/:subject_id/reviews', to: 'reviews#create' # Registra un review de un subject a un usuario (requiere body json)
+
+    put 'reviews/:id', to: 'reviews#update' # Modifica un registro completo de un review de un subject de un usuario (requiere body json)
 
     put 'subjects/:subject_id/reviews/:id', to: 'reviews#update' # Modifica un registro completo de un review de un subject de un usuario (requiere body json)
 
