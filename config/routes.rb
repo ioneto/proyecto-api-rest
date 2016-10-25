@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   resources :users do
     # RUTAS RELACIONADAS A LOS MODELOS USER_SUBJECT Y SUBJECT
     get 'user-subjects', to: 'user_subjects#index' # Muestra todos los user_subjects de un usuario en particular
+    get 'user-subjects/:id', to: 'user_subjects#show' # Muestra todos los user_subjects de un usuario en particular
     get 'user-subjects/subjects/:subject_id', to: 'user_subjects#show_by_subject_id' # Muestra un user_subject con un usuario y un subject en particular
     get 'subjects', to: 'subjects#show_by_user_id' # Muestra todos los subjects de un usuario en particular
     get 'subjects/:semester', to: 'subjects#show_by_user_id_and_semester' # Muestra todos los subjects de un usuario en particular
     get 'subjects/:subject_id', to: 'subjects#show_by_user_id' # Muestra un subject de un usuario en particular
 
-    post 'subjects/:subject_id', to: 'user_subjects#create' # Registra un subject a un usuario (requiere body json)
+    post 'subjects', to: 'user_subjects#create' # Registra un subject a un usuario (requiere body json)
 
     delete 'subjects/:subject_id', to: 'user_subjects#destroy_by_subject_id' # Elimina un user_subject con un usuario y un subject en particular
 
@@ -23,7 +24,8 @@ Rails.application.routes.draw do
 
     put 'subjects/:subject_id/reviews/:id', to: 'reviews#update' # Modifica un registro completo de un review de un subject de un usuario (requiere body json)
 
-    delete 'subjects/:subject_id/reviews/:id', to: 'reviews#destroy' # Elimina un review de un subject de un usuario
+    #delete 'subjects/:subject_id/reviews/:id', to: 'reviews#destroy' # Elimina un review de un subject de un usuario
+    delete 'reviews/:id', to: 'reviews#destroy' # Elimina un review de un subject de un usuario
   end
 
   resources :subjects
